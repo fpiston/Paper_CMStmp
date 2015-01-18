@@ -48,9 +48,6 @@ cmstmp$flores.fallos <- (cmstmp$flores.total-cmstmp$N.gr.total)
 ## Te6H          : Factor; plant with addition of 6HchS telo
 ## Tr1HB         : Factor; plant with translocation of 1HchS·1B
 ## Tr6HD         : Factor; plant with translocation of 1HchS·1B
-## A1H           : Factor; plant with addition or translocation of 1HchS
-## A6H           : Factor; plant with addition or translocation of 6HchS
-
 
 ################################################################################
 ## Correlations between the two fertility estimators                           #
@@ -60,7 +57,7 @@ summary(fercoTj <- lm(Fertility1 ~ gr.flores, data = cmstmp[cmstmp$Ubicacion=='j
 summary(fercoTi <- lm(Fertility1 ~ gr.flores, data = cmstmp[cmstmp$Ubicacion=='invernadero',]))
 
 ## Corresponds to paper Figure 1
-##pdf('../paper/img/correlations-fertility-est.pdf', width=9, height=9)
+pdf('../paper/img/correlations-fertility-est.pdf', width=9, height=9)
 
 par(mfrow=c(2,2))
 plot(cmstmp$Fertility1 ~ cmstmp$gr.flores, ylab='Relative fertility', xlab='Total fertility', type='n')
@@ -77,13 +74,13 @@ plot(Fertility1 ~ gr.flores, data = cmstmp[cmstmp$Ubicacion=='invernadero',], ma
 abline(fercoT, col='red', lwd=2, lty=2)
 points(Fertility1 ~ gr.flores, data = cmstmp[cmstmp$Ubicacion=='invernadero',])
 text(0.6,0.1,paste('R² =', sprintf('%.2f',summary(fercoTi)$r.squared)),cex=2)
-##dev.off()
+dev.off()
 
 ############################################################
 ## Fit linear model                     ####################
 ############################################################
 
-## Like both fertility estimators are highly correlated we used
+## As both fertility estimators are highly correlated we used
 ## the 20 flower fertility proportion values ('Fertility1')
 ## We decided to use this estimator because it represents well the fertility and it is
 ## less time consuming for future works
@@ -92,7 +89,7 @@ text(0.6,0.1,paste('R² =', sprintf('%.2f',summary(fercoTi)$r.squared)),cex=2)
 lm1 <- lm(Fertility1 ~ planta:genotipo + (genotipo + Ubicacion + Heading.date + Lenght.day + Tmean + Tmin + Tmax)^2, data = cmstmp)
 
 ## Check linear model assumptions using plots
-##plot(lm1)
+plot(lm1)
 
 ## the heteroscedasticity of residuals has some pattern in the 0 and close values
 ## Too many 0 is difficult to resolve with data transformation. We tried the log
@@ -118,7 +115,6 @@ lm1r1 <- lm(Fertility1 ~ (genotipo + Ubicacion + Tmean)^2, data = cmstmp)
 
 
 ##### Linear model assumption check by plot
-##pdf('diagnostico-lm1r1.pdf')
 par(mfrow=c(2,2))
 plot(lm1r1, main='lm1r1, Fertilidad20') # It fits relatively well , except for the abundance of zeros
 ##dev.off()
